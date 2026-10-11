@@ -1,1 +1,182 @@
 # valentine-crush
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffe0e8;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
+
+.card {
+  width: 90%;
+  max-width: 430px;
+  padding: 25px 15px;
+}
+
+h1 {
+  color: #e83e62;
+  font-size: 28px;
+}
+
+p {
+  color: #703b49;
+  font-size: 17px;
+}
+
+img {
+  width: 180px;
+  max-width: 70%;
+  border-radius: 15px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+button {
+  border: none;
+  border-radius: 12px;
+  padding: 14px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#yes {
+  background: #35ad48;
+  color: white;
+  transition: transform 0.2s;
+}
+
+#no {
+  background: #ff526b;
+  color: white;
+}
+
+#result {
+  display: none;
+}
+
+.heart {
+  position: fixed;
+  bottom: -30px;
+  animation: float 4s linear forwards;
+  pointer-events: none;
+}
+
+@keyframes float {
+  to {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="card" id="main">
+  <img
+    src="https://media.tenor.com/7W8j4fQJx7AAAAAi/cute-bear-love.gif"
+    alt="Beruang lucu">
+
+  <h1>Will you be my Valentine? ❤️</h1>
+  <p id="message">Please say YES 🥺💕</p>
+
+  <div class="buttons">
+    <button id="yes" onclick="sayYes()">YES 💚</button>
+    <button id="no" onclick="sayNo()">NO 💔</button>
+  </div>
+</div>
+
+<div class="card" id="result">
+  <h1>YAYYYY! ❤️🥹</h1>
+  <p>
+    I knew you would say YES! 💖
+    <br><br>
+    Thank you for making me happy.
+    I love you so much! 🫶💕
+  </p>
+  <div style="font-size:60px">💖🌹💗</div>
+</div>
+
+<script>
+const messages = [
+  "Are you sure? 🥺",
+  "Please think again 😭",
+  "Don't do this to me 💔",
+  "I will be very very very sad...🥹",
+  "Please say YES, pleaseee! 🥺💕",
+  "You can't escape my love! ❤️"
+];
+
+let messageIndex = 0;
+let yesSize = 1;
+
+function sayNo() {
+  const noButton = document.getElementById("no");
+  const yesButton = document.getElementById("yes");
+  const message = document.getElementById("message");
+
+  message.textContent = messages[messageIndex];
+
+  messageIndex =
+    (messageIndex + 1) % messages.length;
+
+  yesSize = Math.min(yesSize + 0.2, 2.5);
+  yesButton.style.transform = `scale(${yesSize})`;
+
+  if (yesSize >= 2.5) {
+    noButton.textContent = "Are you sure? 🥺";
+  }
+}
+
+function sayYes() {
+  document.getElementById("main").style.display = "none";
+  document.getElementById("result").style.display = "block";
+
+  for (let i = 0; i < 30; i++) {
+    setTimeout(createHeart, i * 100);
+  }
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+
+  heart.className = "heart";
+  heart.textContent = ["❤️", "💗", "💖", "💕", "💘"][
+    Math.floor(Math.random() * 5)
+  ];
+
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize =
+    (20 + Math.random() * 25) + "px";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 4000);
+}
+</script>
+</body>
+</html>
